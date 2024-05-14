@@ -1,7 +1,13 @@
+import CustomerForm from "../components/customerForm"
+
 function App() {
+
+  const [customerName, setCustomerName] = useState('enter name...')
+  const [emailAddress, setEmailAddress] = useState('enter email...')
+
   return (
     <div>
-      <h1>Hello Mitch</h1>
+      <CustomerForm customerName={customerName} emailAddress={emailAddress}/>
     </div>
   )
 }
