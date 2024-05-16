@@ -12,21 +12,23 @@ const TabContent = ({
   handleSelfieCameraChange,
 }) => {
   const tabContent = [
-    <CustomerForm
-      customerName={customerName}
-      emailAddress={emailAddress}
-      customerNameChange={handleCustomerNameChange}
-      emailChange={handleEmailAddressChange}
-      socialMedia={socialMedia}
-      selfieCamera={selfieCamera}
-      socialMediaChange={handleSocialMediaChange}
-      selfieCameraChange={handleSelfieCameraChange}
-    />,
+    <div>
+      <CustomerForm
+        customerName={customerName}
+        emailAddress={emailAddress}
+        customerNameChange={handleCustomerNameChange}
+        emailChange={handleEmailAddressChange}
+        socialMedia={socialMedia}
+        selfieCamera={selfieCamera}
+        socialMediaChange={handleSocialMediaChange}
+        selfieCameraChange={handleSelfieCameraChange}
+      />
+    </div>,
     <div>Content for Tab 2</div>,
     <div>Content for Tab 3</div>,
   ]
 
-  return <div>{tabContent[activeTab]}</div>
+  return <div className='tab-content'>{tabContent[activeTab]}</div>
 }
 
 export default TabContent
