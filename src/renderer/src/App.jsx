@@ -1,7 +1,14 @@
 import { useState } from "react"
-import CustomerForm from "./components/customerForm"
+import Tabs from './components/Tabs'
+import TabContent from './components/TabContent'
+
 
 function App() {
+
+  const [activeTab, setActiveTab] = useState(0)
+  const handleTabClick = (index) => {
+    setActiveTab(index)
+  }
 
   const [customerName, setCustomerName] = useState('')
   const [emailAddress, setEmailAddress] = useState('')
@@ -26,15 +33,17 @@ function App() {
 
   return (
     <div>
-      <CustomerForm 
-        customerName={customerName} 
-        emailAddress={emailAddress} 
-        customerNameChange={handleCustomerNameChange} 
-        emailChange={handleEmailAddressChange} 
+      <Tabs activeTab={activeTab} handleTabClick={handleTabClick} />
+      <TabContent
+        activeTab={activeTab}
+        customerName={customerName}
+        emailAddress={emailAddress}
         socialMedia={socialMedia}
         selfieCamera={selfieCamera}
-        socialMediaChange={handleSocialMediaChange}
-        selfieCameraChange={handleSelfieCameraChange}
+        handleCustomerNameChange={handleCustomerNameChange}
+        handleEmailAddressChange={handleEmailAddressChange}
+        handleSocialMediaChange={handleSocialMediaChange}
+        handleSelfieCameraChange={handleSelfieCameraChange}
       />
     </div>
   )
