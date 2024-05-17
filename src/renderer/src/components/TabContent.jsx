@@ -1,31 +1,12 @@
 import CustomerForm from './CustomerForm'
+import Settings from './Settings'
+import Menu from './Menu'
 
-const TabContent = ({
-  activeTab,
-  customerName,
-  emailAddress,
-  socialMedia,
-  selfieCamera,
-  handleCustomerNameChange,
-  handleEmailAddressChange,
-  handleSocialMediaChange,
-  handleSelfieCameraChange,
-}) => {
+const TabContent = ({ activeTab }) => {
   const tabContent = [
-    <div>
-      <CustomerForm
-        customerName={customerName}
-        emailAddress={emailAddress}
-        customerNameChange={handleCustomerNameChange}
-        emailChange={handleEmailAddressChange}
-        socialMedia={socialMedia}
-        selfieCamera={selfieCamera}
-        socialMediaChange={handleSocialMediaChange}
-        selfieCameraChange={handleSelfieCameraChange}
-      />
-    </div>,
-    <div>Content for Tab 2</div>,
-    <div>Content for Tab 3</div>,
+    <CustomerForm />,
+    <Menu />,
+    <Settings />,
   ]
 
   return <div className='tab-content'>{tabContent[activeTab]}</div>

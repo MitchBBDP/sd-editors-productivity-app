@@ -1,4 +1,27 @@
-function CustomerForm({customerName, emailAddress, customerNameChange, emailChange, socialMedia, socialMediaChange, selfieCamera, selfieCameraChange}) {
+import { useState } from "react"
+
+function CustomerForm() {
+    const [customerName, setCustomerName] = useState('')
+    const [emailAddress, setEmailAddress] = useState('')
+    const [socialMedia, setSocialMedia] = useState(false)
+    const [selfieCamera, setSelfieCamera] = useState(false)
+
+    const handleCustomerNameChange = (event) => {
+    setCustomerName(event.target.value)
+    }
+
+    const handleEmailAddressChange = (event) => {
+    setEmailAddress(event.target.value)
+    }
+
+    const handleSocialMediaChange = (event) => {
+    setSocialMedia(event.target.checked)
+    }
+
+    const handleSelfieCameraChange = (event) => {
+    setSelfieCamera(event.target.checked)
+    }
+
     return (
         <div className="container">
             <form>
@@ -8,7 +31,7 @@ function CustomerForm({customerName, emailAddress, customerNameChange, emailChan
                         id="customerInput"
                         className="form-control form-control-sm"
                         value={customerName}
-                        onChange={customerNameChange}
+                        onChange={handleCustomerNameChange}
                     />
                 </div>
                 <div className="form-group d-flex align-items-center mb-1">
@@ -17,7 +40,7 @@ function CustomerForm({customerName, emailAddress, customerNameChange, emailChan
                         id="emailInput"
                         className="form-control form-control-sm"
                         value={emailAddress}
-                        onChange={emailChange}
+                        onChange={handleEmailAddressChange}
                     />
                 </div>
                 <div className="form-group d-flex mb-1">
@@ -26,7 +49,7 @@ function CustomerForm({customerName, emailAddress, customerNameChange, emailChan
                             type="checkbox"
                             className="form-check-input custom-checkbox"
                             checked={socialMedia}
-                            onChange={socialMediaChange}
+                            onChange={handleSocialMediaChange}
                             id="socialMediaCheckbox"
                         />
                         <label className="form-check-label small" htmlFor="socialMediaCheckbox">Social Media &nbsp;</label>
@@ -36,7 +59,7 @@ function CustomerForm({customerName, emailAddress, customerNameChange, emailChan
                             type="checkbox"
                             className="form-check-input custom-checkbox"
                             checked={selfieCamera}
-                            onChange={selfieCameraChange}
+                            onChange={handleSelfieCameraChange}
                             id="selfieCameraCheckbox"
                         />
                         <label className="form-check-label small" htmlFor="selfieCameraCheckbox">Handicam</label>
