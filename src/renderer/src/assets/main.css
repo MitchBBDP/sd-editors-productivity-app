@@ -197,8 +197,6 @@ input.form-control {
 
 .main-tabs {
   position: fixed;
-  height: 100%;
-  width: 100%;
   top: 10px;
   left:  10px;
   z-index: 1;
