@@ -2,8 +2,16 @@ import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import fs from 'fs-extra'
 import path from 'path'
+import { Dropbox } from 'dropbox'
 
 const dbPath = path.join(__dirname, '../../db.json')
+
+const dbx = new Dropbox({
+  accessToken: 'G3hNVKeqYx4AAAAAAAAAAa_r9FWAia1xAcFbfkdNUE94P2RVuEnaYpnBmLVO4Me0',
+  clientId: 't3nq96ieypjy53b',
+  clientSecret: '6eiwa6ypphia0hq',
+  memberId: 'dbmid:AACKJTuYs-_SDsdiEFlFDSny9tRJEH8Y3kw',
+})
 
 // Custom APIs for renderer
 const api = {
@@ -26,16 +34,27 @@ const api = {
   createFolders: async (folderName) => {
     try {
       let db = await fs.readJson(dbPath)
-      const dropboxPath = path.join(db.dropboxFolder, folderName)
-      const nasPath = path.join(db.nasFolder, folderName)
+      const newDropboxFolder = path.join(db.dropboxFolder, folderName)
+      const newNasFolder = path.join(db.nasFolder, folderName)
   
-      const dropboxExists = await fs.pathExists(dropboxPath)
-      const nasExists = await fs.pathExists(nasPath)
+      const dropboxExists = await fs.pathExists(newDropboxFolder)
+      const nasExists = await fs.pathExists(newNasFolder)
   
       if (!dropboxExists && !nasExists) {
-        await fs.mkdir(dropboxPath)
-        await fs.mkdir(nasPath)
-        return { success: true, message: 'Folder created in both locations' }
+        await fs.mkdir(newDropboxFolder)
+        await fs.mkdir(newNasFolder)
+        
+        const sharedLink = await dbx.sharingCreateSharedLinkWithSettings({
+          path: `/${newDropboxFolder}`,
+          settings: {
+            requested_visibility: 'public',
+          },
+        })
+        return {
+          success: true,
+          message: 'Folder created in both locations',
+          sharedLink: sharedLink.result.url,
+        }
       } else if (dropboxExists && nasExists) {
         return { success: false, message: 'Folder already exists in both locations' }
       } else if (dropboxExists) {
