@@ -7,24 +7,56 @@ function CustomerForm() {
     const [selfieCamera, setSelfieCamera] = useState(false)
 
     const handleCustomerNameChange = (event) => {
-    setCustomerName(event.target.value)
+        setCustomerName(event.target.value)
     }
 
     const handleEmailAddressChange = (event) => {
-    setEmailAddress(event.target.value)
+        setEmailAddress(event.target.value)
     }
 
     const handleSocialMediaChange = (event) => {
-    setSocialMedia(event.target.checked)
+        setSocialMedia(event.target.checked)
     }
 
     const handleSelfieCameraChange = (event) => {
-    setSelfieCamera(event.target.checked)
+        setSelfieCamera(event.target.checked)
+    }
+
+    const handleNewProject = async (event) => {
+        event.preventDefault()
+        if (customerName && emailAddress) {
+            let projectName = customerName
+            if (socialMedia && !selfieCamera){
+                projectName = `SM ${customerName}`
+            } else  if (!socialMedia && selfieCamera){
+                projectName = `HC ${customerName}`
+            } else  if (socialMedia && selfieCamera){
+                projectName = `SMHC ${customerName}`
+            }
+
+            try {
+                const result = await window.api.createFolders(projectName)
+                if (result.success) {
+                    console.log(result.message)
+                    setCustomerName('')
+                    setEmailAddress('')
+                    setSocialMedia(false)
+                    setSelfieCamera(false)
+                } else {
+                    console.log(result.message)
+                }
+            } catch (error) {
+                console.error('Failed to create folder:', error)
+            }
+        } else {
+            console.log('Customer Name and Email Address is required')
+        }
     }
 
     return (
         <div className="container">
-            <form>
+            <div className="section-header my-2">Create New Project</div>
+            <form onSubmit={handleNewProject}>
                 <div className="form-group d-flex align-items-center mb-2">
                     <label htmlFor="customerInput" className="form-label small name-label">Name:</label>
                     <input

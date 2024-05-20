@@ -3,6 +3,7 @@ import Settings from './Settings'
 import Menu from './Menu'
 
 const TabContent = ({ activeTab }) => {
+  
   const tabContent = [
     <CustomerForm />,
     <Menu />,
